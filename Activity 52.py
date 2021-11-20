@@ -8,15 +8,11 @@ database="store_cms_plusplus"
 
 mycursor = mydb.cursor()
 
-id = input("Nhập id: ")
-
-sold = input("Nhập số lượng: ")
+def update_laptop(id, sold):
  
+    querry = "UPDATE store_cms_plusplus.laptop SET sold = %s, last_updated_timestamp = now() WHERE id = %s"
+    values = (sold, id)
+    mycursor.execute(querry, values)
+    mydb.commit()
 
-mycursor.execute(f"UPDATE store_cms_plusplus.laptop SET sold = {sold}, last_updated_timestamp = now() WHERE id = {id}")
-
-mycursor.fetchall()
-
-mycursor.execute(f"SELECT id, sold from store_cms_plusplus.laptop WHERE id = {id}")
-
-print(mycursor.fetchall())
+update_laptop(1, 1000)
