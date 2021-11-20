@@ -8,9 +8,14 @@ database="store_cms_plusplus"
 
 mycursor = mydb.cursor()
 
-mycursor.execute("INSERT INTO store_cms_plusplus.laptop (`name`, url, maker, `type`, ram, `cpu`, ssd, hdd, price, card, screen_resolution, screen_size, sold) VALUES ('A1', 'google.com', 'ASUS', 'A', '8GB', 'i5', '128GB', '0GB', 20000000, 'GTX 5GB', 'FHD 1080', 24, 1);")
+def insert_laptop(name, url, maker, type, ram, cpu, ssd, hdd, price, card, screen_resolution, screen_size, sold):
+    querry = "INSERT IGNORE INTO store_cms_plusplus.laptop (`name`, url, maker, `type`, ram, `cpu`, ssd, hdd, price, card, screen_resolution, screen_size, sold) VALUES \
+        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+    values = (name, url, maker, type, ram, cpu, ssd, hdd, price, card, screen_resolution, screen_size, sold)
+    mycursor.execute(querry, values)
+    mydb.commit()
 
-mycursor.fetchall()
+insert_laptop("A1", "google.com", "AAA", "A_laptop", "8GB", "i5", "128GB", "0GB", 10000000, "GTX", "FHD 1080", "14 inch", 1)
 
 mycursor.execute("SELECT * FROM store_cms_plusplus.laptop WHERE name LIKE '%a1%'")
 
