@@ -111,14 +111,8 @@ UNLOCK TABLES;
 
 -- Dump completed on 2021-11-26 20:40:25
 
-SELECT orders.orderNumber, orders.orderDate, orders.requiredDate, orders.`status`,  SUM(orderdetails.quantityOrdered * orderdetails.priceEach) as orderValue 
-FROM orders 
-JOIN orderdetails ON orders.orderNumber = orderdetails.orderNumber
-WHERE orders.orderDate BETWEEN '2003-03-01' AND '2003-03-30'
-GROUP BY orders.orderNumber;
-
-SELECT orders.orderNumber, orders.orderDate, orders.requiredDate, orders.`status`,  SUM(orderdetails.quantityOrdered * orderdetails.priceEach) as orderValue 
-FROM orders 
-JOIN orderdetails ON orders.orderNumber = orderdetails.orderNumber
-WHERE orders.`status` = 'Cancelled'
-GROUP BY orders.orderNumber;
+SELECT products.productCode, products.productName, SUM(orderdetails.quantityOrdered * orderdetails.priceEach) as productOrderedValue
+FROM products
+JOIN orderdetails ON products.productCode = orderdetails.productCode
+GROUP BY products.productCode
+ORDER BY productOrderedValue ASC;
